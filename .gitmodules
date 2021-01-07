@@ -4,3 +4,6 @@
 [submodule "components/esp-idf-ssd1306"]
 	path = components/esp-idf-ssd1306
 	url = git@github.com:bkeevil/esp-idf-ssd1306
+[submodule "lib/quirc"]
+	path = lib/quirc
+	url = git@github.com:dlbeer/quirc
