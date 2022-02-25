@@ -1,5 +1,7 @@
 #include "app_httpd.h"
+#include "esp_http_client.h"
 #include "esp_http_server.h"
+#include "esp_https_ota.h"
 #include "esp_timer.h"
 #include "esp_camera.h"
 #include "freertos/FreeRTOS.h"
@@ -266,14 +268,13 @@ static esp_err_t upgrade_handler(httpd_req_t *req) {
     };
     esp_err_t ret = esp_https_ota(&config);
     if (ret == ESP_OK) {
-            char success = "Successfully flashed image to OTA partition!";
-            httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
-            httpd_resp_send(req, success, sizeof(success));
-            esp_restart();
-        } else {
-            httpd_resp_send_404(req);
-            return ESP_FAIL;
-        }
+        char *success = "Successfully flashed image to OTA partition!";
+        httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
+        httpd_resp_send(req, success, sizeof(success));
+        esp_restart();
+    } else {
+        httpd_resp_send_404(req);
+        return ESP_FAIL;
     }
     return ESP_OK;
 }
@@ -527,7 +528,7 @@ void app_httpd_startup(){
         .method    = HTTP_GET,
         .handler   = upgrade_handler,
         .user_ctx  = NULL
-    }
+    };
 
     httpd_uri_t store_uri = {
         .uri       = "/store",
