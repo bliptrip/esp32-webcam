@@ -7,6 +7,9 @@
 #include "sdkconfig.h"
 #include "app_settings.h"
 #include "app_wifi.h"
+#ifdef CONFIG_DIMMER_ENABLED
+#include "app_dimmer.h"
+#endif
 #include "app_camera.h"
 #include "app_httpd.h"
 #include "app_lcd.h"
@@ -26,6 +29,9 @@ void app_shutdown() {
   #endif
   #ifdef CONFIG_LED_ILLUMINATOR_ENABLED
   app_illuminator_shutdown();
+  #endif
+  #ifdef CONFIG_DIMMER_ENABLED
+  app_dimmer_shutdown();
   #endif
   #ifdef CONFIG_MDNS_ENABLED
   mdns_free();
@@ -49,6 +55,9 @@ void app_main()
   app_camera_startup();
   #ifdef CONFIG_LED_ILLUMINATOR_ENABLED
   app_illuminator_startup();
+  #endif
+  #ifdef CONFIG_DIMMER_ENABLED
+  app_dimmer_startup();
   #endif
   app_wifi_startup();
   

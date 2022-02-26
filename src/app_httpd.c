@@ -23,6 +23,9 @@
 #ifdef CONFIG_LED_ILLUMINATOR_ENABLED
 #include "app_illuminator.h"
 #endif
+#ifdef CONFIG_DIMMER_ENABLED
+#include "app_dimmer.h"
+#endif
 
 static const char* TAG = "camera_httpd";
 
@@ -344,6 +347,9 @@ static esp_err_t cmd_handler(httpd_req_t *req){
     else if(!strcmp(variable, "ae_level")) res = s->set_ae_level(s, val);
     #ifdef CONFIG_LED_ILLUMINATOR_ENABLED
     else if(!strcmp(variable, "led_intensity")) { led_duty = val; if (isStreaming) app_illuminator_set_led_intensity(led_duty); }
+    #endif
+    #ifdef CONFIG_DIMMER_ENABLED
+    else if(!strcmp(variable, "dimmer_intensity")) { app_dimmer_set_intensity((float)val); }
     #endif
     else if(!strcmp(variable, "hostname")) strncpy(settings.hostname,value,LEN_HOSTNAME);
     else if(!strcmp(variable, "wifi_ssid")) strncpy(settings.wifi_ssid,value,LEN_WIFI_SSID);

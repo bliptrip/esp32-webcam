@@ -1,6 +1,7 @@
 idf_component_register(
     SRCS "app_main.c"
          "app_settings.c"
+         "app_dimmer.c"
          "app_illuminator.c"
          "app_camera.c"
          "app_wifi.c"
