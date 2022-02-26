@@ -1,3 +1,11 @@
+menu "Dimmer Module Configuration"
+config DIMMER_ENABLED
+    bool "Dimmer Enabled"
+    default n
+    help
+    Enable high-intensity grow light dimmer module
+endmenu 
+
 menu "Camera Web Server"
 
 menu "WiFi Settings"
